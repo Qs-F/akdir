@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	"log"
 	"os"
 )
 
@@ -13,7 +13,8 @@ func check(e error) {
 
 func main() {
 	if len(os.Args) == 1 {
-		check(errors.New("not setted arg"))
+		log.Print("Error:not setted arg")
+		os.Exit(1)
 	}
 	err := os.MkdirAll(os.Args[1], 0755)
 	check(err)
