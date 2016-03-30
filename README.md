@@ -12,3 +12,7 @@ akdir let you make directory recursively.
 ## usage
 
 `akdir PATH`
+
+or
+
+`echo "PATH" | akdir`
