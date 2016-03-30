@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"github.com/mitchellh/go-homedir"
 	"golang.org/x/crypto/ssh/terminal"
 	"log"
 	"os"
@@ -30,6 +31,8 @@ func main() {
 	} else {
 		check(errors.New("Error: not setted arg"))
 	}
-	err := os.MkdirAll(s, 0755)
+	s, err := homedir.Expand(s)
+	check(err)
+	err = os.MkdirAll(s, 0755)
 	check(err)
 }
