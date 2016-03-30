@@ -1,21 +1,35 @@
 package main
 
 import (
+	"errors"
+	"fmt"
+	"golang.org/x/crypto/ssh/terminal"
 	"log"
 	"os"
+	"unicode/utf8"
 )
 
 func check(e error) {
 	if e != nil {
-		panic(e)
+		log.Print(e.Error())
+		os.Exit(1)
 	}
 }
 
 func main() {
-	if len(os.Args) == 1 {
-		log.Print("Error:not setted arg")
-		os.Exit(1)
+	s := ""
+	n := len(os.Args)
+	if n < 2 && !terminal.IsTerminal(0) {
+		fmt.Scan(&s)
 	}
-	err := os.MkdirAll(os.Args[1], 0755)
+	m := utf8.RuneCountInString(s)
+	if (m >= 1) || (m < 1 && n > 1) {
+		if n > 1 {
+			s = os.Args[1]
+		}
+	} else {
+		check(errors.New("Error: not setted arg"))
+	}
+	err := os.MkdirAll(s, 0755)
 	check(err)
 }
