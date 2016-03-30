@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"github.com/mitchellh/go-homedir"
@@ -34,5 +35,9 @@ func main() {
 	s, err := homedir.Expand(s)
 	check(err)
 	err = os.MkdirAll(s, 0755)
+	check(err)
+	b := bufio.NewWriter(os.Stdout)
+	fmt.Fprintf(b, s)
+	err = b.Flush()
 	check(err)
 }
